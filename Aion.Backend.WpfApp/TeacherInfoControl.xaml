@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="Aion.Backend.WpfApp.TeacherInfoControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Aion.Backend.WpfApp"
+             mc:Ignorable="d" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             Loaded="UserControl_Loaded"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Margin="5">
+            <StackPanel>
+                <DockPanel>
+                    <DatePicker DockPanel.Dock="Left" SelectedDate="{Binding SelectedDate}" FontSize="20" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                    <Button DockPanel.Dock="Left" Width="100" Content="復歸" Click="ResetLessonDate"/>
+                </DockPanel>
+                <Border BorderBrush="LightGray" BorderThickness="2" DockPanel.Dock="Top" Margin="0,10,0,10"/>
+                <ListBox ItemsSource="{Binding LessonDate}" SelectedItem="{Binding SelectedLessonDate}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock Grid.Column="3" Text="{Binding }" FontSize="20"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Margin="5" Grid.Column="1">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Left">
+                    <ComboBox  ItemsSource="{Binding LessonKey}"  SelectedItem="{Binding SelectedKey}" 
+                          SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBox.Style>
+                            <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
+                                <Setter Property="FontSize" Value="20"/>
+                                <Setter Property="Width" Value="70"/>
+                                <Setter Property="Margin" Value="20,0,0,0"/>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
+                </StackPanel>
+                <Border BorderBrush="LightGray" BorderThickness="2" DockPanel.Dock="Top" Margin="0,10,0,10"/>
+                <ListBox ItemsSource="{Binding TeacherInfo}" DockPanel.Dock="Top">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignNavigationListBoxItem}">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="FontSize" Value="20"/>
+                            <Setter Property="Height" Value="50"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" TextAlignment="Center"  Text="{Binding UserName}"/>
+                                <TextBlock Grid.Column="1" TextAlignment="Left"  Text="{Binding LessonName}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <DockPanel  VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                    <WrapPanel Margin="10">
+                        <TextBlock Text="人數 :" FontSize="20"/>
+                        <TextBlock Text="{Binding Count}" FontSize="20" Margin="10,0,20,0"/>
+                    </WrapPanel>
+                    <WrapPanel Margin="10">
+                        <TextBlock Text="薪資 :" FontSize="20"/>
+                        <TextBlock Text="{Binding Total}" FontSize="20" Margin="10,0,20,0"/>
+                    </WrapPanel>
+                </DockPanel>
+            </DockPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

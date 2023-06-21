@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="Aion.Backend.WpfApp.MyUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Aion.Backend.WpfApp"
+             mc:Ignorable="d" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             Loaded="UserControl_Loaded"
+             d:DesignHeight="450" d:DesignWidth="1200">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <GroupBox Margin="5" Header="會員">
+            <ListBox ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignNavigationListBoxItem}">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="FontSize" Value="20"/>
+                        <Setter Property="Height" Value="50"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding FirstName}"/>
+                            <TextBlock Grid.Column="1" Text="{Binding LastName}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Age}" Width="30"/>
+                            <TextBlock Grid.Column="3" Text="{Binding Birthday,StringFormat=yyyy/MM/dd}"/>
+                            <TextBlock Grid.Column="4" Text="{Binding Style}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </GroupBox>
+        <GroupBox Margin="5" Grid.Column="1" Header="監護人">
+            <Grid VerticalAlignment="top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="20"/>
+                        <Setter Property="Margin" Value="0,15,0,0"/>
+                    </Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Margin" Value="10"/>
+                    </Style>
+                </Grid.Resources>
+                <StackPanel>
+                    <TextBlock Text="姓名"/>
+                    <TextBlock Text="{Binding ParentInfo.Name}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="關係"/>
+                    <TextBlock Text="{Binding ParentInfo.Relation}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="電話"/>
+                    <TextBlock Text="{Binding ParentInfo.Phone}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="3">
+                    <TextBlock Text="Email"/>
+                    <TextBlock Text="{Binding ParentInfo.Email}"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>
