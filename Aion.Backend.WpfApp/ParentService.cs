@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dapper;
+using Microsoft.Data.Sqlite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -28,6 +30,15 @@ namespace Aion.Backend.WpfApp
                 Relation = datas.Relation,
             };
             return parentInfo;
+        }
+
+        public void Create(Parent parent)
+        {
+            using (var connection = new SqliteConnection(myConnectionString))
+            {
+                string sqlstr = $"INSERT INTO Parent(Name,Email,Phone) VALUES('{parent.Name}','{parent.Email}',{parent.Phone})";
+                connection.Execute(sqlstr, parent);
+            }
         }
     }
 }

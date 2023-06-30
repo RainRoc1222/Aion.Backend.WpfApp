@@ -15,8 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using AutoMapper;
 using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
 
 namespace Aion.Backend.WpfApp
 {
@@ -25,13 +25,15 @@ namespace Aion.Backend.WpfApp
     /// </summary>
     public partial class MyUserControl : UserControl, INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
         public User SelectedUser { get; set; }
+        public MyCsvHelper CsvHelper { get; set; }
         public ParentInfoViewModel ParentInfo { get; set; }
         public ObservableCollection<User> Users { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
         public MyUserControl()
         {
             InitializeComponent();
+            CsvHelper = new MyCsvHelper();
         }
 
 
@@ -44,12 +46,22 @@ namespace Aion.Backend.WpfApp
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            Users = new ObservableCollection<User>();
-            var users = SQLiteMananergment.GetAllData(new User());
-            foreach (var user in users)
+            Update();
+        }
+
+        private void CsvToDb_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() == true)
             {
-                Users.Add(user);
+                CsvHelper.GetCsv(dialog.FileName);
+                Update();
             }
+        }
+        private void Update()
+        {
+            var users = SQLiteMananergment.GetAllData(new User());
+            Users = new ObservableCollection<User>(users);
         }
     }
 }
