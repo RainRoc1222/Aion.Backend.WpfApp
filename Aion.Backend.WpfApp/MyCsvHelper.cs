@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net.Repository.Hierarchy;
+using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -32,11 +33,12 @@ namespace Aion.Backend.WpfApp
                             SQLiteMananergment.UserService.Create(user);
                         }
                     }
+          
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+               LogMgt.Logger.Info(ex.ToString());
             }
         }
 
