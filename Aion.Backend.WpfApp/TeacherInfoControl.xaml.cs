@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -27,10 +28,11 @@ namespace Aion.Backend.WpfApp
         public ObservableCollection<TeacherViewModel> TeacherViewModel { get; set; }
         public ObservableCollection<string> LessonDate { get; set; }
         public ObservableCollection<TeacherViewModel> TeacherInfo { get; set; }
+        public TeacherViewModel SelectedInfo { get; set; }
         public DateTime SelectedDate { get; set; } = DateTime.Now;
-        public DateTime SelectedLessonDate { get; set; } 
+        public DateTime SelectedLessonDate { get; set; }
         public string SelectedKey { get; set; }
-        public string[] LessonKey { get; set; }
+        public List<string> LessonKey { get; set; }
         public int TeacherId { get; set; }
         public int Count { get; set; }
         public int Total { get; set; }
@@ -73,8 +75,8 @@ namespace Aion.Backend.WpfApp
             {
                 LessonDate = new ObservableCollection<string>();
                 var lessonDates = SQLiteMananergment.TeacherService.GetTeacherInfo(TeacherId)
-                    .Where(x => x.Date.ToString("yyyy/MM/dd") == SelectedDate.ToString("yyyy/MM/dd"))
-                    .Select(x => x.Date.ToString("yyyy/MM/dd"));
+                    .Where(x => x.Date == SelectedDate.ToString("yyyy/MM/dd"))
+                    .Select(x => x.Date);
                 foreach (var date in lessonDates)
                 {
                     LessonDate.Add(date);
@@ -89,36 +91,35 @@ namespace Aion.Backend.WpfApp
 
         private void Initialize()
         {
-            TeacherViewModel = new ObservableCollection<TeacherViewModel>();
             LessonDate = new ObservableCollection<string>();
-            LessonKey = new string[] { "L1", "L2", "L3", "L4" };
+            LessonKey = new List<string>();
+            for (int i = 14; i < 22; i++)
+            {
+                LessonKey.Add($"{i}:00");
+            }
             Level = SQLiteMananergment.TeacherService.GetAll().First(x => x.Id == TeacherId).Level;
             Position = SQLiteMananergment.TeacherService.GetAll().First(x => x.Id == TeacherId).Position;
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            TeacherViewModel = new ObservableCollection<TeacherViewModel>();
-            var viewmodel = InitializeTeacherViewModel();
-            InitializeLessonDate(viewmodel);
+            Update();
         }
 
-        private List<TeacherViewModel> InitializeTeacherViewModel()
+        private void Update()
+        {
+            UpdateTeacherViewModel();
+            UpdateLessonDate();
+        }
+        private void UpdateTeacherViewModel()
         {
             var infos = SQLiteMananergment.TeacherService.GetTeacherInfo(TeacherId);
-            foreach (var info in infos)
-            {
-                TeacherViewModel.Add(info);
-            }
-            return infos;
+            TeacherViewModel = new ObservableCollection<TeacherViewModel>(infos);
         }
 
-        private void InitializeLessonDate(List<TeacherViewModel> infos)
+        private void UpdateLessonDate()
         {
-            var dates = infos.Select(x => x.Date.ToString("yyyy/MM/dd")).Distinct();
-            foreach (var date in dates)
-            {
-                LessonDate.Add(date);
-            }
+            var dates = TeacherViewModel.Select(x => x.Date).Distinct();
+            LessonDate = new ObservableCollection<string>(dates);
         }
 
 
@@ -131,11 +132,8 @@ namespace Aion.Backend.WpfApp
 
         private IEnumerable<TeacherViewModel> GetTeacherViewModel()
         {
-            var datas = TeacherViewModel.Where(x => x.Lesson == SelectedKey && x.Date.ToString("yyyy/MM/dd") == SelectedLessonDate.ToString("yyyy/MM/dd"));
-            foreach (var data in datas)
-            {
-                TeacherInfo.Add(data);
-            }
+            var datas = TeacherViewModel.Where(x => x.Lesson == SelectedKey && x.Date == SelectedLessonDate.ToString("yyyy/MM/dd"));
+            TeacherInfo = new ObservableCollection<TeacherViewModel>(datas);
             return datas;
         }
 
@@ -155,9 +153,30 @@ namespace Aion.Backend.WpfApp
 
         private void ResetLessonDate(object sender, RoutedEventArgs e)
         {
-            LessonDate = new ObservableCollection<string>();
-            var infos = InitializeTeacherViewModel();
-            InitializeLessonDate(infos);
+            Update();
         }
+
+        private void Add(object sender, RoutedEventArgs e)
+        {
+            var window = new CreateTeacherInfoWindow(TeacherId);
+            window.ShowDialog();
+            Update();
+        }
+
+        private void Edit(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Delete(object sender, RoutedEventArgs e)
+        {
+            if (SelectedInfo != null && SelectedLessonDate != null && SelectedKey != null)
+            {
+                var userId = SQLiteMananergment.GetAllData(new User()).FirstOrDefault(x => x.FirstName == SelectedInfo.UserFirstName && x.LastName == SelectedInfo.UserLastName).Id;
+                var report = SQLiteMananergment.GetAllData(new TeacherReport()).FirstOrDefault(x => x.UserId == userId && x.Date == SelectedLessonDate.ToString("yyyy/MM/dd") && x.TeacherId == TeacherId);
+                SQLiteMananergment.ReportService.Delete(report);
+            }
+        }
+
     }
 }

@@ -63,5 +63,10 @@ namespace Aion.Backend.WpfApp
             var users = SQLiteMananergment.GetAllData(new User());
             Users = new ObservableCollection<User>(users);
         }
+
+        private void ShowUserDetails_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

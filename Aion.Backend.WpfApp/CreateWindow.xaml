@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="Window" Height="450" Width="400">
+        Height="450" Width="400">
     <UniformGrid Columns="2" Rows="8">
         <UniformGrid.Resources>
             <Style TargetType="TextBlock">

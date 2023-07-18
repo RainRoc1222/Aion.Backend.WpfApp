@@ -21,7 +21,7 @@ namespace Aion.Backend.WpfApp
         {
             using (var connection = new SqliteConnection(myConnectionString))
             {
-                string sqlstr = $"INSERT INTO User(FirstName,LastName,Address,Age,ParentId,Birthday,Style,Relation) VALUES('{user.FirstName}','{user.LastName}','{user.Address}',{user.Age},{user.ParentId},'{user.Birthday}','{user.Style}','{user.Relation}')";
+                string sqlstr = $"INSERT INTO User(FirstName,LastName,Address,Age,ParentId,Birthday,Style,Relation) VALUES('{user.FirstName}','{user.LastName}','{user.Address}',{user.Age},'{user.ParentId}','{user.Birthday}','{user.Style}','{user.Relation}')";
                 connection.Execute(sqlstr, user);
             }
         }

@@ -8,7 +8,7 @@
         xmlns:calcBinding="clr-namespace:CalcBinding;assembly=CalcBinding"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="MainWindow" Height="600" Width="1200">
+        Title="MainWindow" Height="800" Width="1600">
     <materialDesign:DialogHost>
         <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
             <materialDesign:DrawerHost.LeftDrawerContent>

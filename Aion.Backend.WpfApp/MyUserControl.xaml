@@ -9,44 +9,75 @@
              Loaded="UserControl_Loaded"
              d:DesignHeight="450" d:DesignWidth="1200">
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="20"/>
+            </Style>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="500"/>
+            <ColumnDefinition Width="1000"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <GroupBox Margin="5" Header="會員">
-            <ListBox ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}">
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignNavigationListBoxItem}">
+        <GroupBox Margin="5" Header="會員" FontSize="20" >
+            <ListView ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem" >
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        <Setter Property="FontSize" Value="20"/>
-                        <Setter Property="Height" Value="50"/>
                     </Style>
-                </ListBox.ItemContainerStyle>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding FirstName}"/>
-                            <TextBlock Grid.Column="1" Text="{Binding LastName}"/>
-                            <TextBlock Grid.Column="2" Text="{Binding Age}" Width="30"/>
-                            <TextBlock Grid.Column="3" Text="{Binding Birthday,StringFormat=yyyy/MM/dd}"/>
-                            <TextBlock Grid.Column="4" Text="{Binding Style}"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridView.ColumnHeaderContainerStyle>
+                            <Style TargetType="GridViewColumnHeader" BasedOn="{StaticResource MaterialDesignToolButton}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontSize" Value="20" />
+                                <Setter Property="Height" Value="50" />
+                            </Style>
+                        </GridView.ColumnHeaderContainerStyle>
+                        <GridViewColumn Header="FirstName" Width="150" >
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding FirstName}" TextAlignment="Center" FontSize="20"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="LastName"  Width="150"  >
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding LastName}" TextAlignment="Center" FontSize="20"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Age" Width="100" >
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Age}" TextAlignment="Center" FontSize="20"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Birthday" Width="200" >
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Birthday,StringFormat=yyyy/MM/dd}" TextAlignment="Center" FontSize="20"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Style" Width="300" >
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Style}" TextAlignment="Center" FontSize="20" Padding="0,10,0,10"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </GroupBox>
-        <GroupBox Margin="5" Grid.Column="1" Header="監護人">
+        <GroupBox Margin="5" Grid.Column="1" Header="監護人" FontSize="20">
             <Grid VerticalAlignment="top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
@@ -81,12 +112,18 @@
                 </StackPanel>
             </Grid>
         </GroupBox>
-        <Button Grid.Row="1" 
+        <WrapPanel Grid.Row="1"  Grid.ColumnSpan="2" Height="100" VerticalAlignment="Center">
+            <Button 
                 Content="匯入Csv" 
-                Grid.ColumnSpan="2"
                 Width="120"
+                Height="50"
                 HorizontalAlignment="Left"
                 Margin="10"
                 Click="CsvToDb_Click"/>
+            <Button Content="詳細資料" Click="ShowUserDetails_Click"
+                      Width="120"  
+                    Height="50"
+                    Margin="10"/>
+        </WrapPanel>
     </Grid>
 </UserControl>

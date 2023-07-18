@@ -118,6 +118,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CreateTeacherInfoWindow.xaml.cs">
+      <DependentUpon>CreateTeacherInfoWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CreateWindow.xaml.cs">
       <DependentUpon>CreateWindow.xaml</DependentUpon>
     </Compile>
@@ -125,6 +128,7 @@
     <Compile Include="MyCsvHelper.cs" />
     <Compile Include="Parent.cs" />
     <Compile Include="ParentInfoViewModel.cs" />
+    <Compile Include="ReportService.cs" />
     <Compile Include="SQLiteMananergment.cs" />
     <Compile Include="Teacher.cs" />
     <Compile Include="TeacherControl.xaml.cs">
@@ -139,6 +143,10 @@
     <Compile Include="User.cs" />
     <Compile Include="ParentService.cs" />
     <Compile Include="UserService.cs" />
+    <Page Include="CreateTeacherInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CreateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

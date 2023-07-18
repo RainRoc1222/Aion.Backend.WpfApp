@@ -2,6 +2,8 @@
 using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting;
 
 namespace Aion.Backend.WpfApp
 {
@@ -11,11 +13,13 @@ namespace Aion.Backend.WpfApp
         public static TeacherService TeacherService { get; set; }
         public static ParentService ParentService { get; set; }
         public static UserService UserService { get; set; }
+        public static ReportService ReportService { get; set; }
         static SQLiteMananergment()
         {
             TeacherService = new TeacherService(myConnectionString);
             ParentService = new ParentService(myConnectionString);
             UserService = new UserService(myConnectionString);
+            ReportService = new ReportService(myConnectionString);
         }
         public static IEnumerable<T> GetAllData<T>(T table) where T : class
         {
@@ -30,8 +34,9 @@ namespace Aion.Backend.WpfApp
         {
             using (var connection = new SqliteConnection(myConnectionString))
             {
-                string sqlstr = $"DELETE * FROM {table.GetType().Name}";
-                connection.Execute(sqlstr);
+                var datas = GetAllData(table);
+                var sqlstr = $"DELETE FROM {table.GetType().Name}";
+                connection.Execute(sqlstr, datas);
             }
         }
     }

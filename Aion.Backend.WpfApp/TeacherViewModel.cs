@@ -8,9 +8,11 @@ namespace Aion.Backend.WpfApp
 {
     public class TeacherViewModel
     {
-        public DateTime Date { get; set; }  
+        public string Date { get; set; }  
         public string TeacherName { get; set; } 
-        public string UserName { get; set; }
+        public string UserFirstName { get; set; }
+        public string UserLastName { get; set; }
+        public int UserId { get; set; }
         public string Lesson { get; set; }
         public string LessonName { get; set; }
         public int Level { get; set; }

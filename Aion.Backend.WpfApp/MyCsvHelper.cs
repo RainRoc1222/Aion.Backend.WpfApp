@@ -12,17 +12,17 @@ namespace Aion.Backend.WpfApp
         {
             try
             {
-                SQLiteMananergment.DeleteAllData(new User());
                 SQLiteMananergment.DeleteAllData(new Parent());
+                SQLiteMananergment.DeleteAllData(new User());
 
                 using (var stream = new StreamReader(filePath))
                 {
                     while (stream.Peek() != -1)
                     {
                         var line = stream.ReadLine();
-                        if (!line.StartsWith("提交時間") && !string.IsNullOrWhiteSpace(line))
+                        if (!line.Contains("提交時間") && !string.IsNullOrWhiteSpace(line))
                         {
-                            var arr = line.Split(',');
+                            var arr = line.Replace("\"","").Split(',');
 
                             var parent = CreateParent(arr);
                             SQLiteMananergment.ParentService.Create(parent);
@@ -33,12 +33,12 @@ namespace Aion.Backend.WpfApp
                             SQLiteMananergment.UserService.Create(user);
                         }
                     }
-          
                 }
             }
             catch (Exception ex)
             {
-               LogMgt.Logger.Info(ex.ToString());
+                MessageBox.Show(ex.ToString());
+                LogMgt.Logger.Info(ex.ToString());
             }
         }
 
@@ -46,11 +46,11 @@ namespace Aion.Backend.WpfApp
         {
             var firstName = array[1];
             var lastName = array[2];
-            var birthday = Convert.ToDateTime(array[3]).ToString("yyyy/MM/dd");
-            var age = Convert.ToInt32(array[4]);
-            var relation = array[8];
-            var address = array[9];
-            var style = array[10];
+            var birthday = array[3] + "," + array[4];
+            var age = Convert.ToInt32(array[5]);
+            var relation = array[9];
+            var address = array[10];
+            var style = array[11];
 
             var user = new User()
             {
@@ -62,15 +62,15 @@ namespace Aion.Backend.WpfApp
                 Style = style,
                 Relation = relation,
             };
+
             return user;
         }
 
         private Parent CreateParent(string[] array)
         {
-
-            var parentName = array[5];
-            var phone = array[6];
+            var parentName = array[6];
             var email = array[7];
+            var phone = array[8];
 
             var parent = new Parent()
             {

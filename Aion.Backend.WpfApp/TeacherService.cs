@@ -13,10 +13,6 @@ namespace Aion.Backend.WpfApp
             myConnectionString = connectionString;
         }
 
-        public IEnumerable<TeacherReport> GetReport()
-        {
-            return SQLiteMananergment.GetAllData(new TeacherReport());
-        }
         public IEnumerable<Teacher> GetAll()
         {
             return SQLiteMananergment.GetAllData(new Teacher());
@@ -61,8 +57,8 @@ namespace Aion.Backend.WpfApp
                 var users = SQLiteMananergment.GetAllData(new User());
                 var teachers = SQLiteMananergment.GetAllData(new Teacher());
                 var reports = SQLiteMananergment.GetAllData(new TeacherReport());
-                var datas = reports.Join(teachers, r => r.TeacherId, t => t.Id, (r, t) => new { r.Date, r.Lesson, r.LessonName, r.UserId, t.Level, t.Position, t.Id }).Where(x => x.Id == id)
-                    .Join(users, d => d.UserId, u => u.Id, (d, u) => new { d.Date, d.LessonName, d.Lesson, u.FirstName, u.LastName, d.Level, d.Position });
+                var datas = reports.Join(teachers, r => r.TeacherId, t => t.Id, (r, t) => new {r.Lesson, r.Date, r.LessonName, r.UserId, t.Level, t.Position, t.Id }).Where(x => x.Id == id)
+                    .Join(users, d => d.UserId, u => u.Id, (d, u) => new { d.Date, d.LessonName, u.FirstName, u.LastName, d.Level, d.Position, u.Id,d.Lesson});
                 var teacherName = SQLiteMananergment.GetAllData(new Teacher()).First(x => x.Id == id).Name;
 
                 foreach (var data in datas)
@@ -70,9 +66,11 @@ namespace Aion.Backend.WpfApp
                     result.Add(new TeacherViewModel()
                     {
                         Date = data.Date,
-                        Lesson = data.Lesson,
                         LessonName = data.LessonName,
-                        UserName = data.FirstName + data.LastName,
+                        Lesson = data.Lesson,
+                        UserFirstName = data.FirstName,
+                        UserLastName = data.LastName,
+                        UserId = data.Id,
                         TeacherName = teacherName,
                         Level = data.Level,
                         Position = data.Position,
@@ -82,9 +80,7 @@ namespace Aion.Backend.WpfApp
             }
             catch (System.Exception ex)
             {
-
-                return null;
-
+                return new List<TeacherViewModel>();
             }
         }
     }
