@@ -94,12 +94,16 @@ namespace Aion.Backend.WpfApp
 
         private void ShowTeacherInfo(object sender, RoutedEventArgs e)
         {
-            var id = SelectedTeacher.Id;
-            var window = new Window() { 
-                Content = new TeacherInfoControl(id),
-                Width = 1200,
-            };
-            window.Show();
+            if(SelectedTeacher != null)
+            {
+                var id = SelectedTeacher.Id;
+                var window = new Window()
+                {
+                    Content = new TeacherInfoControl(id),
+                    Width = 1200,
+                };
+                window.Show();
+            }
         }
     }
 }

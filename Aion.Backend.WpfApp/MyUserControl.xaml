@@ -15,7 +15,7 @@
             </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="800"/>
+            <ColumnDefinition Width="900"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -59,10 +59,17 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="生日" Width="200" >
+                        <GridViewColumn Header="生日" Width="180" >
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Birthday,StringFormat=yyyy/MM/dd}" TextAlignment="Center" Padding="0,10,0,10" FontSize="20"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="已繳會費" Width="200" >
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsPay}"  HorizontalAlignment="Center" IsEnabled="False"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

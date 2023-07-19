@@ -14,5 +14,6 @@ namespace Aion.Backend.WpfApp
         public string Date{ get; set; }
         public int UserId { get; set; }
         public string Lesson { get; set; }
+        public bool IsMissClass { get; set; }
     }
 }

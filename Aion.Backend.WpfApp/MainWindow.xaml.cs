@@ -46,6 +46,8 @@ namespace Aion.Backend.WpfApp
                     RequireAuthentication = false
                 },
             };
+
+            SelectedPageItem = PageItems[0];
         }
 
         private void ListBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

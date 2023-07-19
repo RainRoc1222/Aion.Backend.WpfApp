@@ -29,6 +29,7 @@ namespace Aion.Backend.WpfApp
         public List<string> Lessons { get; set; }
         public string SelectedLesson { get; set; }
         public string SelectedLevel { get; set; }
+        public bool IsMissClass { get; set; }
         public ObservableCollection<Teacher> Teachers { get; set; }
         public Teacher SelectedTeacher { get; set;}
         public event PropertyChangedEventHandler PropertyChanged;

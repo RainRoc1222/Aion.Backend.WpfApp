@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Loaded="Window_Loaded"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="UserInfomartionWindow" Height="450" Width="800">
+        Title="UserInfomartionWindow" Height="600" Width="1000">
     <Grid>
         <GroupBox Margin="5" Header="上課日期" FontSize="20">
             <Grid>
@@ -23,7 +23,7 @@
                                  FontSize="20" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                 </WrapPanel>
                 <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="2" DockPanel.Dock="Top" Margin="0,10,0,10"/>
-                <ListView ItemsSource="{Binding Report}" Grid.Row="2">
+                <ListView ItemsSource="{Binding TeacherViewModel}" SelectedItem="{Binding SelectedItem}" Grid.Row="2">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem" >
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -52,10 +52,24 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="舞風" Width="150" >
+                            <GridViewColumn Header="老師" Width="150" >
+                                <GridViewColumn.CellTemplate >
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding TeacherName}" TextAlignment="Center" FontSize="20"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="舞風" Width="200" >
                                 <GridViewColumn.CellTemplate >
                                     <DataTemplate>
                                         <TextBlock Text="{Binding LessonName}" TextAlignment="Center" FontSize="20"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="補課" Width="150" >
+                                <GridViewColumn.CellTemplate >
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding IsMissClass}" HorizontalAlignment="Center" IsEnabled="False"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -73,9 +87,9 @@
                     </WrapPanel>
                 </WrapPanel>
                 <WrapPanel HorizontalAlignment="Center" Grid.Row="4">
-                    <Button Content="新增" Click="Add"    Width="100" Margin="5"/>
-                    <Button Content="編輯" Click="Edit"   Width="100" Margin="5"/>
-                    <Button Content="刪除" Click="Delete" Width="100" Margin="5"/>
+                    <Button Content="新增" Click="Add"    Width="120" Height="50" Margin="5"/>
+                    <Button Content="編輯" Click="Edit"   Width="120" Height="50" Margin="5"/>
+                    <Button Content="刪除" Click="Delete" Width="120" Height="50"  Margin="5"/>
                 </WrapPanel>
             </Grid>
         </GroupBox>

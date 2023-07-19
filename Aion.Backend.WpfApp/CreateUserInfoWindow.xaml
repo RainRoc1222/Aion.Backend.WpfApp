@@ -22,7 +22,7 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <UniformGrid Columns="2" Rows="3">
+        <UniformGrid Columns="2" Rows="4">
             <WrapPanel>
                 <TextBlock Text="上課日期 :" VerticalAlignment="Bottom" Margin="50,0,10,5"/>
                 <DatePicker Margin="15,0" SelectedDate="{Binding SelectedDate}" FontSize="20" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
@@ -57,6 +57,10 @@
             <WrapPanel >
                 <TextBlock Text="分級 : " VerticalAlignment="Bottom" Margin="0,0,0,5"/>
                 <ComboBox ItemsSource="{Binding Levels}" SelectedItem="{Binding SelectedLevel}"/>
+            </WrapPanel>
+            <WrapPanel >
+                <TextBlock Text="是否為補課 : " VerticalAlignment="Bottom" Margin="50,0,0,5"/>
+                <CheckBox IsChecked="{Binding IsMissClass}" Margin="10,0,0,2"/>
             </WrapPanel>
         </UniformGrid>
         <WrapPanel Grid.Row="5" HorizontalAlignment="Center">
