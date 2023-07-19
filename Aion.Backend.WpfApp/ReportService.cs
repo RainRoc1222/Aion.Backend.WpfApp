@@ -15,7 +15,7 @@ namespace Aion.Backend.WpfApp
         {
             using (var connection = new SqliteConnection(myConnectionString))
             {
-                string sqlstr = $"INSERT INTO TeacherReport(TeacherId,LessonName,Date,UserId,Lesson) VALUES({report.TeacherId},'{report.LessonName}','{report.Date}','{report.UserId}','{report.Lesson}')";
+                string sqlstr = $"INSERT INTO TeacherReport(TeacherId,LessonName,Date,UserId,Lesson,IsMissClass) VALUES({report.TeacherId},'{report.LessonName}','{report.Date}','{report.UserId}','{report.Lesson}',{report.IsMissClass})";
                 connection.Execute(sqlstr, report);
             }
         }
@@ -25,17 +25,17 @@ namespace Aion.Backend.WpfApp
             {
                 using (var connection = new SqliteConnection(myConnectionString))
                 {
-                    string sqlstr = $"UPDATE TeacherReport SET LessonName={report.LessonName},UserId={report.UserId},Date={report.Date} WHERE Id={report.Id}";
+                    string sqlstr = $"UPDATE TeacherReport SET LessonName='{report.LessonName}',UserId='{report.UserId}',Date='{report.Date}',IsMissClass='{report.IsMissClass}' WHERE Id='{report.Id}'";
                     connection.Execute(sqlstr, report);
                 }
             }
         }
-        public void Delete(TeacherReport report)
+        public void Delete(int id)
         {
             using (var connection = new SqliteConnection(myConnectionString))
             {
-                string sqlstr = $"DELETE FROM TeacherReport WHERE Id={report.Id}";
-                connection.Execute(sqlstr, report);
+                string sqlstr = $"DELETE FROM TeacherReport WHERE Id={id}";
+                connection.Execute(sqlstr);
             }
         }
     }

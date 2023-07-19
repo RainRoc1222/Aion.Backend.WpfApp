@@ -34,7 +34,7 @@ namespace Aion.Backend.WpfApp
         {
             using (var connection = new SqliteConnection(myConnectionString))
             {
-                string sqlstr = $"INSERT INTO Teacher(Name,Email,Phone,Style,Level,Position) VALUES({teacher.Name},{teacher.Email},{teacher.Phone},{teacher.Style},{teacher.Level},{teacher.Position})";
+                string sqlstr = $"INSERT INTO Teacher(Name,Email,Phone,Style,Level,Position) VALUES('{teacher.Name}','{teacher.Email}','{teacher.Phone}','{teacher.Style}','{teacher.Level}','{teacher.Position}')";
                 connection.Execute(sqlstr, teacher);
             }
         }

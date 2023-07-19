@@ -180,7 +180,7 @@ namespace Aion.Backend.WpfApp
             if (SelectedInfo != null && SelectedLessonDate != null && SelectedKey != null)
             {
                 var report = SQLiteMananergment.GetAllData(new TeacherReport()).FirstOrDefault(x => x.UserId == SelectedInfo.UserId && x.Date == SelectedLessonDate.ToString("yyyy/MM/dd") && x.TeacherId == TeacherId);
-                SQLiteMananergment.ReportService.Delete(report);
+                SQLiteMananergment.ReportService.Delete(report.Id);
                 Update();
             }
         }

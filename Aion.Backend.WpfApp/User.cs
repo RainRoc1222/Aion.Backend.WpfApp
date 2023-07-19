@@ -13,5 +13,6 @@ namespace Aion.Backend.WpfApp
         public string Birthday { get; set; }
         public string Style { get;set; }
         public string Relation { get; set; }
+        public bool IsPay { get; set; }
     }
 }

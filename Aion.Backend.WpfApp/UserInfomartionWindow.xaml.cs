@@ -22,10 +22,11 @@ namespace Aion.Backend.WpfApp
     public partial class UserInfomartionWindow : Window, INotifyPropertyChanged
     {
         public int UserId { get; set; }
-        public ObservableCollection<TeacherReport> Report { get; set; }
+        public ObservableCollection<TeacherViewModel> TeacherViewModel { get; set; }
         public DateTime SelectedDate { get; set; } = DateTime.Now;
+        public TeacherViewModel SelectedItem { get; set; }
         public int Count { get; set; }
-        public int Total { get; set; }
+        public int Total { get; set; } = 0;
 
         public event PropertyChangedEventHandler PropertyChanged;
         public UserInfomartionWindow(int id)
@@ -54,7 +55,8 @@ namespace Aion.Backend.WpfApp
                     TeacherId = window.SelectedTeacher.Id,
                     Date = window.SelectedDate.ToString("yyyy/MM/dd"),
                     Lesson = window.SelectedLesson,
-                    LessonName = window.SelectedTeacher.Style + window.SelectedLevel
+                    LessonName = window.SelectedTeacher.Style + window.SelectedLevel,
+                    IsMissClass = window.IsMissClass
                 };
 
                 SQLiteMananergment.ReportService.Create(report);
@@ -64,31 +66,73 @@ namespace Aion.Backend.WpfApp
 
         private void Edit(object sender, RoutedEventArgs e)
         {
+            if (SelectedItem != null)
+            {
+                var window = new CreateUserInfoWindow(UserId);
 
+                if (window.ShowDialog() == true)
+                {
+                    var report = new TeacherReport()
+                    {
+                        Id = SelectedItem.ReportId,
+                        UserId = UserId,
+                        TeacherId = window.SelectedTeacher.Id,
+                        Date = window.SelectedDate.ToString("yyyy/MM/dd"),
+                        Lesson = window.SelectedLesson,
+                        LessonName = window.SelectedTeacher.Style + window.SelectedLevel,
+                        IsMissClass = window.IsMissClass
+                    };
+
+                    SQLiteMananergment.ReportService.Edit(report);
+                    Update();
+                }
+            }
         }
 
         private void Delete(object sender, RoutedEventArgs e)
         {
-
+            if (SelectedItem != null)
+            {
+                SQLiteMananergment.ReportService.Delete(SelectedItem.ReportId);
+                Update();
+            }
         }
 
         private void GetTotal()
         {
-            if (Report.Count > 4)
+
+            if (TeacherViewModel.Count == 0)
             {
-                Total = (Report.Count - 4) * 250;
+                Total = 0;
             }
-            else
+            else if (TeacherViewModel.Count > 0 && TeacherViewModel.Count <= 4)
             {
                 Total = 1600;
             }
+            else
+            {
+                var tempCount = 0;
+                foreach (var data in TeacherViewModel)
+                {
+                    if (!data.IsMissClass)
+                    {
+                        tempCount++;
+                    }
+                }
+                var extra = tempCount - 4 >= 0 ? tempCount - 4 : 0;
+                Total = 1600 + extra * 250;
+            }
+
         }
         private void Update()
         {
-            var report = SQLiteMananergment.GetAllData(new TeacherReport()).Where(x => x.UserId == UserId && x.Date.Contains(SelectedDate.ToString("yyyy/MM")));
-            Report = new ObservableCollection<TeacherReport>(report);
-            Count = report.Count();
-            GetTotal();
+            if (UserId != 0)
+            {
+                var viewmodel = SQLiteMananergment.UserService.GetUserInfo(UserId).Where(x => x.Date.Contains(SelectedDate.ToString("yyyy/MM")));
+                TeacherViewModel = new ObservableCollection<TeacherViewModel>(viewmodel);
+                Count = TeacherViewModel.Count();
+                GetTotal();
+            }
         }
     }
 }
