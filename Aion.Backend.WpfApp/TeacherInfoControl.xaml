@@ -42,7 +42,7 @@
                 </WrapPanel>
             </Grid>
         </GroupBox>
-        <GroupBox Margin="5" Grid.Column="1" Header="堂數" FontSize="20">
+        <GroupBox Margin="5" Grid.Column="1" Header="時段" FontSize="20">
             <DockPanel>
                 <StackPanel DockPanel.Dock="Top" HorizontalAlignment="Left">
                     <ComboBox  ItemsSource="{Binding LessonKey}"  SelectedItem="{Binding SelectedKey}" 

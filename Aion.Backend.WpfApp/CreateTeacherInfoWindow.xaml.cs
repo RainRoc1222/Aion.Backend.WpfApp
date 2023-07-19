@@ -1,18 +1,10 @@
-﻿using System;
+﻿using log4net.Core;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Aion.Backend.WpfApp
 {
@@ -25,10 +17,11 @@ namespace Aion.Backend.WpfApp
         public Teacher Teacher { get; set; }
         public ObservableCollection<User> Users { get; set; }
         public User SelectedUser { get; set; }
-        public string Level { get; set; }
         public string SelectedLesson { get; set; }
+        public string SelectedLevel { get; set; }
+        public string[] Levels { get; set; }
         public List<string> Lessons { get; set; }
-        private string myDateTimeString { get; set; }
+        public string DateTimeString { get; set; }
         public ObservableCollection<Teacher> Teachers { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         public CreateTeacherInfoWindow(int id)
@@ -41,6 +34,7 @@ namespace Aion.Backend.WpfApp
         private void Initialize()
         {
             Lessons = new List<string>();
+            Levels = new string[] {"","4-6歲","初級","中級"};
             for (int i = 14; i < 22; i++)
             {
                 Lessons.Add($"{i}:00");
@@ -50,13 +44,11 @@ namespace Aion.Backend.WpfApp
         }
         private void OnSelectedDateChanged()
         {
-            myDateTimeString = SelectedDate.ToString("yyyy/MM/dd");
+            DateTimeString = SelectedDate.ToString("yyyy/MM/dd");
         }
 
         private void Check(object sender, RoutedEventArgs e)
         {
-            var report = CreateTeacherReport();
-            SQLiteMananergment.ReportService.Create(report);
             DialogResult = true;
             Close();
         }
@@ -65,17 +57,6 @@ namespace Aion.Backend.WpfApp
         {
             Close();
         }
-        private TeacherReport CreateTeacherReport()
-        {
-            var userId = SQLiteMananergment.GetAllData(new User()).FirstOrDefault(x => x.LastName == SelectedUser.LastName).Id;
-            var report = new TeacherReport()
-            {
-                UserId = userId,
-                TeacherId = Teacher.Id,
-                Date = myDateTimeString,
-                LessonName = Teacher.Style + Level
-            };
-            return report;
-        }
+ 
     }
 }

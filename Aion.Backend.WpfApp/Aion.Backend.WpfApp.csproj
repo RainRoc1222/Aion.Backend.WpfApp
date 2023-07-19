@@ -121,9 +121,13 @@
     <Compile Include="CreateTeacherInfoWindow.xaml.cs">
       <DependentUpon>CreateTeacherInfoWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CreateUserInfoWindow.xaml.cs">
+      <DependentUpon>CreateUserInfoWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CreateWindow.xaml.cs">
       <DependentUpon>CreateWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DatePickerCalendar.cs" />
     <Compile Include="LogMgt.cs" />
     <Compile Include="MyCsvHelper.cs" />
     <Compile Include="Parent.cs" />
@@ -142,8 +146,15 @@
     <Compile Include="TeacherViewModel.cs" />
     <Compile Include="User.cs" />
     <Compile Include="ParentService.cs" />
+    <Compile Include="UserInfomartionWindow.xaml.cs">
+      <DependentUpon>UserInfomartionWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserService.cs" />
     <Page Include="CreateTeacherInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CreateUserInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TeacherInfoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInfomartionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

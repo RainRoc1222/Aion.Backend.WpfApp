@@ -24,7 +24,7 @@ namespace Aion.Backend.WpfApp
             {
                 using (var connection = new SqliteConnection(myConnectionString))
                 {
-                    string sqlstr = $"UPDATE Teacher SET Name={teacher.Name},Email={teacher.Email},Phone={teacher.Phone},Style={teacher.Style},Level={teacher.Level},Position={teacher.Position} WHERE Id={teacher.Id}";
+                    string sqlstr = $"UPDATE Teacher SET Name='{teacher.Name}',Email='{teacher.Email}',Phone='{teacher.Phone}',Style='{teacher.Style}',Level='{teacher.Level}',Position='{teacher.Position}' WHERE Id='{teacher.Id}'";
                     connection.Execute(sqlstr, teacher);
                 }
             }

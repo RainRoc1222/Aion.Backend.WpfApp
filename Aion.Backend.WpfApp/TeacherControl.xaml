@@ -13,44 +13,73 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ListBox ItemsSource="{Binding Teachers}" SelectedItem="{Binding SelectedTeacher}">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignNavigationListBoxItem}">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="FontSize" Value="20"/>
-                    <Setter Property="Height" Value="50"/>
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding Id}"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Name}" TextAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Text="{Binding Style}" TextAlignment="Center"/>
-                        <TextBlock Grid.Column="3" Text="{Binding Position}"/>
-                        <TextBlock Grid.Column="4" Text="{Binding Level}"/>
-                        <TextBlock Grid.Column="5" Text="{Binding Email}"/>
-                        <TextBlock Grid.Column="6" Text="{Binding Phone}"/>
-                        <Button Grid.Column="7" Content="詳細資料" Click="ShowTeacherInfo" Tag="{Binding Id}"/>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <GroupBox Header="老師" FontSize="20">
+            <ListView ItemsSource="{Binding Teachers}" SelectedItem="{Binding SelectedTeacher}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem" >
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridView.ColumnHeaderContainerStyle>
+                            <Style TargetType="GridViewColumnHeader" BasedOn="{StaticResource MaterialDesignToolButton}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontSize" Value="20" />
+                                <Setter Property="Height" Value="50" />
+                            </Style>
+                        </GridView.ColumnHeaderContainerStyle>
+                        <GridViewColumn Header="姓名"  Width="150"  >
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" TextAlignment="Center" FontSize="20"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="舞風" Width="200" >
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Style}" TextAlignment="Center" FontSize="20"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="職稱" Width="200" >
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Position}" TextAlignment="Center" FontSize="20"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="級距" Width="100" >
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Level}" TextAlignment="Center" FontSize="20" Padding="0,10,0,10"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Email" Width="250" >
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Email}" TextAlignment="Center" FontSize="20" Padding="0,10,0,10"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="電話" Width="300" >
+                            <GridViewColumn.CellTemplate >
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Phone}" TextAlignment="Center" FontSize="20" Padding="0,10,0,10"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
         <DockPanel Grid.Row="1" HorizontalAlignment="Center">
-            <Button Content="新增" Width="100" Margin="5" Click="Add"/>
-            <Button Content="編輯" Width="100" Margin="5" Click="Edit"/>
-            <Button Content="刪除" Width="100" Margin="5" Click="Delete"/>
+            <Button Content="新增" Width="120" Height="50" Margin="10" Click="Add"/>
+            <Button Content="編輯" Width="120" Height="50" Margin="10" Click="Edit"/>
+            <Button Content="刪除" Width="120" Height="50"  Margin="10" Click="Delete"/>
+            <Button Content="詳細資料" Width="120" Height="50" Click="ShowTeacherInfo"  Margin="10"/>
         </DockPanel>
     </Grid>
 </UserControl>

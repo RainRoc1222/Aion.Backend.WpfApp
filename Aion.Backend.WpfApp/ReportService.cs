@@ -15,7 +15,7 @@ namespace Aion.Backend.WpfApp
         {
             using (var connection = new SqliteConnection(myConnectionString))
             {
-                string sqlstr = $"INSERT INTO TeacherReport(TeacherId,LessonName,Date,UserId,Lesson) VALUES({report.TeacherId},'{report.LessonName}','{report.Date}',{report.UserId})";
+                string sqlstr = $"INSERT INTO TeacherReport(TeacherId,LessonName,Date,UserId,Lesson) VALUES({report.TeacherId},'{report.LessonName}','{report.Date}','{report.UserId}','{report.Lesson}')";
                 connection.Execute(sqlstr, report);
             }
         }
@@ -34,7 +34,7 @@ namespace Aion.Backend.WpfApp
         {
             using (var connection = new SqliteConnection(myConnectionString))
             {
-                string sqlstr = $"DELETE FROM Teacher WHERE Id={report.Id}";
+                string sqlstr = $"DELETE FROM TeacherReport WHERE Id={report.Id}";
                 connection.Execute(sqlstr, report);
             }
         }

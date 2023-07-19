@@ -97,8 +97,10 @@ namespace Aion.Backend.WpfApp
             {
                 LessonKey.Add($"{i}:00");
             }
-            Level = SQLiteMananergment.TeacherService.GetAll().First(x => x.Id == TeacherId).Level;
-            Position = SQLiteMananergment.TeacherService.GetAll().First(x => x.Id == TeacherId).Position;
+
+            var info = SQLiteMananergment.TeacherService.GetAll().First(x => x.Id == TeacherId);
+            Level = info.Level;
+            Position = info.Position;
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -159,7 +161,12 @@ namespace Aion.Backend.WpfApp
         private void Add(object sender, RoutedEventArgs e)
         {
             var window = new CreateTeacherInfoWindow(TeacherId);
-            window.ShowDialog();
+            if(window.ShowDialog() == true)
+            {
+                var report = CreateTeacherReport(window);
+                SQLiteMananergment.ReportService.Create(report);
+            }
+
             Update();
         }
 
@@ -172,10 +179,23 @@ namespace Aion.Backend.WpfApp
         {
             if (SelectedInfo != null && SelectedLessonDate != null && SelectedKey != null)
             {
-                var userId = SQLiteMananergment.GetAllData(new User()).FirstOrDefault(x => x.FirstName == SelectedInfo.UserFirstName && x.LastName == SelectedInfo.UserLastName).Id;
-                var report = SQLiteMananergment.GetAllData(new TeacherReport()).FirstOrDefault(x => x.UserId == userId && x.Date == SelectedLessonDate.ToString("yyyy/MM/dd") && x.TeacherId == TeacherId);
+                var report = SQLiteMananergment.GetAllData(new TeacherReport()).FirstOrDefault(x => x.UserId == SelectedInfo.UserId && x.Date == SelectedLessonDate.ToString("yyyy/MM/dd") && x.TeacherId == TeacherId);
                 SQLiteMananergment.ReportService.Delete(report);
+                Update();
             }
+        }
+
+        private TeacherReport CreateTeacherReport(CreateTeacherInfoWindow window)
+        {
+            var userId = SQLiteMananergment.GetAllData(new User()).FirstOrDefault(x => x.Id == window.SelectedUser.Id).Id;
+            var report = new TeacherReport()
+            {
+                UserId = userId,
+                TeacherId = window.Teacher.Id,
+                Date = window.DateTimeString,
+                LessonName = window.Teacher.Style + window.SelectedLevel
+            };
+            return report;
         }
 
     }

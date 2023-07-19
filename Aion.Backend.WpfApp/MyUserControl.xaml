@@ -15,7 +15,7 @@
             </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1000"/>
+            <ColumnDefinition Width="800"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -38,38 +38,31 @@
                                 <Setter Property="Height" Value="50" />
                             </Style>
                         </GridView.ColumnHeaderContainerStyle>
-                        <GridViewColumn Header="FirstName" Width="150" >
+                        <GridViewColumn Header="姓"  Width="150" >
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
                                     <TextBlock Text="{Binding FirstName}" TextAlignment="Center" FontSize="20"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="LastName"  Width="150"  >
+                        <GridViewColumn Header="名"  Width="150"  >
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
                                     <TextBlock Text="{Binding LastName}" TextAlignment="Center" FontSize="20"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Age" Width="100" >
+                        <GridViewColumn Header="年齡" Width="100" >
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Age}" TextAlignment="Center" FontSize="20"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Birthday" Width="200" >
+                        <GridViewColumn Header="生日" Width="200" >
                             <GridViewColumn.CellTemplate >
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Birthday,StringFormat=yyyy/MM/dd}" TextAlignment="Center" FontSize="20"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Style" Width="300" >
-                            <GridViewColumn.CellTemplate >
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Style}" TextAlignment="Center" FontSize="20" Padding="0,10,0,10"/>
+                                    <TextBlock Text="{Binding Birthday,StringFormat=yyyy/MM/dd}" TextAlignment="Center" Padding="0,10,0,10" FontSize="20"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -120,7 +113,7 @@
                 HorizontalAlignment="Left"
                 Margin="10"
                 Click="CsvToDb_Click"/>
-            <Button Content="詳細資料" Click="ShowUserDetails_Click"
+            <Button Content="詳細資料" Click="ShowUserInfo_Click"
                       Width="120"  
                     Height="50"
                     Margin="10"/>

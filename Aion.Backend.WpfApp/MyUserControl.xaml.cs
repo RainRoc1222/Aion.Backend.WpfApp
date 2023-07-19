@@ -64,9 +64,10 @@ namespace Aion.Backend.WpfApp
             Users = new ObservableCollection<User>(users);
         }
 
-        private void ShowUserDetails_Click(object sender, RoutedEventArgs e)
+        private void ShowUserInfo_Click(object sender, RoutedEventArgs e)
         {
-
+            var window = new UserInfomartionWindow(SelectedUser.Id);
+            window.Show();
         }
     }
 }
